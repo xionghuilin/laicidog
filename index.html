@@ -3,10 +3,35 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>莱茨狗助手</title>
-    <script type="text/javascript" src="/js/query.js"></script>
+    <link rel="stylesheet" href="//res.layui.com/layui/dist/css/layui.css?t=1515376178709" media="all">
 </head>
 <body>
+    <div>
+        <input type="checkbox" name="all" value="0">全选
+        <input type="checkbox" name="petIds" value="1"/>普通
+        <input type="checkbox" name="petIds" value="2"/>稀有
+        <input type="checkbox" name="petIds" value="3"/>卓越
+        <input type="checkbox" name="petIds" value="4"/>史诗
+        <input type="checkbox" name="petIds" value="5"/>神话
+        <input type="checkbox" name="petIds" value="6"/>传说
+    </div>
+    <div>
+        <table class="layui-hide" id="test" lay-filter="demo"></table>
 
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
 
+        <div class="row">
+            <div class="col-30">petId</div>
+            <div>名称</div>
+            <div>价格</div>
+        </div>
+    </div>
 </body>
+<script type="text/javascript" src="js/lib/jquery-1.11.3.min.js"></script>
+<script src="//res.layui.com/layui/dist/layui.js?t=1515376178709"></script>
+<script type="text/javascript" src="js/query.js"></script>
 </html>
