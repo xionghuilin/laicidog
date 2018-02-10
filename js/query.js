@@ -2,17 +2,6 @@
  * Created by xionghl on 2018/2/10.
  */
 $(function(){
-   var queryParam = {
-       appId: 1,
-       lastAmount: null,
-       lastRareDegree: null,
-       pageNo: 1,
-       pageSize: 10,
-       petIds: [],
-       querySortType: "CREATETIME_ASC",
-       requestId: 1518243274602,
-       tpl: ""
-   }
 
 });
 
@@ -20,9 +9,22 @@ layui.config({
     version: '1515376178709' //为了更新 js 缓存，可忽略
 });
 
-layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
-    var laydate = layui.laydate //日期
-        ,laypage = layui.laypage //分页
+layui.use([ 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
+    var tableOptions = {
+        url: 'https://pet-chain.baidu.com/data/market/queryPetsOnSale', //请求地址
+        method: 'POST', //方式
+        id: 'content', //生成 Layui table 的标识 id，必须提供，用于后文刷新操作，笔者该处出过问题
+        page: false, //是否分页
+        where: { type: "all" }, //请求后端接口的条件，该处就是条件错误点，按照官方给出的代码示例，原先写成了 where: { key : { type: "all" } }，结果并不是我想的那样，如此写，key 将是后端的一个类作为参数，里面有 type 属性，如果误以为 key 是 Layui 提供的格式，那就大错特错了
+        response: { //定义后端 json 格式，详细参见官方文档
+            statusName: 'Code', //状态字段名称
+            statusCode: '200', //状态字段成功值
+            msgName: 'Message', //消息字段
+            countName: 'Total', //总数字段
+            dataName: 'Result' //数据字段
+        }
+    };
+    var laypage = layui.laypage //分页
          layer = layui.layer //弹层
         ,table = layui.table //表格
         ,carousel = layui.carousel //轮播
@@ -37,21 +39,15 @@ layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'elemen
 
     //执行一个 table 实例
     table.render({
-        elem: '#test'
+        elem: '#content'
         ,height: 332
-        ,url: '/demo/table/user/' //数据接口
+        ,url: 'https://pet-chain.baidu.com/data/market/queryPetsOnSale' //数据接口
         ,page: true //开启分页
         ,cols: [[ //表头
             {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
-            ,{field: 'username', title: '用户名', width:80}
-            ,{field: 'sex', title: '性别', width:80, sort: true}
-            ,{field: 'city', title: '城市', width:80}
-            ,{field: 'sign', title: '签名', width: 170}
-            ,{field: 'experience', title: '积分', width: 80, sort: true}
-            ,{field: 'score', title: '评分', width: 80, sort: true}
-            ,{field: 'classify', title: '职业', width: 80}
-            ,{field: 'wealth', title: '财富', width: 135, sort: true}
-            ,{fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}
+            ,{field: 'desc', title: '用户名', width:80}
+            ,{field: 'amount', title: '价钱', width:80, sort: true}
+            /*,{fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}*/
         ]]
     });
 
